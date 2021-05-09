@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Layout from '../core/Layout';
 import {Link, Redirect} from 'react-router-dom'
 import {signin, authenticate, isAuthenticated} from '../auth/index';
+import  Chat  from "../chatBot/ChatBot";
 
 const Signin = () => {
     const [values,
@@ -99,6 +100,9 @@ const Signin = () => {
             return <Redirect to="/"/>
         }
     }
+    const clearCache = () => {
+        localStorage.removeItem('chat')
+    }
 
     return (
         <Layout
@@ -109,6 +113,7 @@ const Signin = () => {
             {showErrors()}
             {signInForm()}
             {redirectUser()}
+            {clearCache()}
         </Layout>
     )
 }

@@ -16,6 +16,7 @@ export const signup = user => {
         console.log(err);
     });
 };
+
 export const signin = user => {
     // console.log(name," ", email, " ", password);
     return fetch(`${API}/signin`, {
@@ -31,6 +32,7 @@ export const signin = user => {
         console.log(err);
     });
 };
+
 export const authenticate = (data, next) => {
     // console.log(data,"auth");
     if (typeof window != undefined) {
@@ -42,6 +44,8 @@ export const authenticate = (data, next) => {
 export const signout = (next) => {
     if (typeof window != undefined) {
         localStorage.removeItem('jwt');
+        localStorage.removeItem('chat');
+        localStorage.removeItem('name');
         next();
         return fetch(`${API}/signout`, {method: "GET"}).then((response) => {
             console.log("signout", response);

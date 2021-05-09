@@ -8,6 +8,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
+import  ChatBot  from "../chatBot/ChatBot";
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 
 const UserDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -17,6 +19,7 @@ const UserDashboard = () => {
     user: { _id, name, email, role },
     token,
   } = isAuthenticated();
+
   const loadPurchaseHistory = () => {
     getDoctors()
       .then((data) => {
@@ -33,9 +36,11 @@ const UserDashboard = () => {
   useEffect(() => {
     loadPurchaseHistory();
   }, []);
+
   const showAlert = (msg) => {
     return <Alert variant="success">{msg}</Alert>;
   };
+
   const userLinks = () => {
     return (
       <div className="card">
@@ -162,6 +167,7 @@ const UserDashboard = () => {
           <Button style={{ marginBottom: "10px" }} onClick={provideAccess}>
             Provide Access
           </Button>
+          {ChatBot()}
         </div>
       </div>
     </Layout>

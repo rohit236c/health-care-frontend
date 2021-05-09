@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { getPatients } from "./apis";
 import moment from "moment";
 import InputGroup from "react-bootstrap/InputGroup";
+import  Chat  from "../chatBot/ChatBot";
 
 const DoctorDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -111,6 +112,7 @@ const DoctorDashboard = () => {
         <div className="col-9">
           {userInfo()}
           {showsuc && purchaseHistory(history)}
+          {/* {Chat()} */}
         </div>
       </div>
     </Layout>

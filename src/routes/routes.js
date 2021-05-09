@@ -7,12 +7,13 @@ import PrivateRoutes from '../auth/privateRoutes';
 import DoctorDashboard from '../users/DoctorDashboard';
 import UploadDoc from '../users/UploadDoc';
 import Home from '../core/Home';
+import Test from '../core/TestPage'
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home}></Route>
+        <Route path="/" exact component={Test}></Route>
         <Route path="/signin" exact component={Signin}></Route>
         <Route path="/signup" exact component={Signup}></Route>
         <PrivateRoutes path="/user/dashboard" exact component={UserDashboard}></PrivateRoutes>

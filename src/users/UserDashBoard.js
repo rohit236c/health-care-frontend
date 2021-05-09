@@ -5,11 +5,13 @@ import { Link, Redirect } from "react-router-dom";
 import { getDoctors } from "./apis";
 import moment from "moment";
 import InputGroup from "react-bootstrap/InputGroup";
+import FormGroup from "react-bootstrap/FormGroup";
+import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
-import  ChatBot  from "../chatBot/ChatBot";
-import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import ChatBot from "../chatBot/ChatBot";
+import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
 
 const UserDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -52,7 +54,10 @@ const UserDashboard = () => {
             </Link>
           </li>
           <li className="list-group-item">
-            <a className="nav-link" href={`https://sheltered-fjord-94062.herokuapp.com/`}>
+            <a
+              className="nav-link"
+              href={`https://sheltered-fjord-94062.herokuapp.com/`}
+            >
               Online Video Chat Link
             </a>
           </li>
@@ -96,24 +101,23 @@ const UserDashboard = () => {
     console.log(e.target.checked);
     let dc = doc;
     if (e.target.checked) {
-      let k = dc.indexOf(id) // -1
-      if(k === -1) {
+      let k = dc.indexOf(id); // -1
+      if (k === -1) {
         dc.push(id);
         setDoc(dc);
       }
-      
     } else {
       console.log("daoc");
       let p = [];
-        for(let i = 0; i < doc.length; i++) {
-          if(doc[i] !== id) {
-            console.log("test");
-            p.push(doc[i]);
-          }
+      for (let i = 0; i < doc.length; i++) {
+        if (doc[i] !== id) {
+          console.log("test");
+          p.push(doc[i]);
         }
-        console.log("test", p);
-        setDoc(p);
-        console.log("test", doc);
+      }
+      console.log("test", p);
+      setDoc(p);
+      console.log("test", doc);
     }
 
     console.log(doc, "doc");
@@ -130,18 +134,18 @@ const UserDashboard = () => {
               history.map((h, i) => {
                 return (
                   <li key={i} className="list-group-item">
-                    <span style={{ marginRight: "20px" }}>name:</span>
-                    <span style={{ marginRight: "20px" }}>{h.name}</span>
-                    <span style={{ marginRight: "20px" }}>id:</span>
-                    <span>{h._id}</span>
-                    <span>
-                      <InputGroup.Checkbox
-                        aria-label="Checkbox for following text input"
-                        onClick={(e) => {
-                          addAccess(h._id, e);
-                        }}
-                      />
-                    </span>
+                    <Form>
+                      <span>
+                        <Form.Check
+                          type="checkbox"
+                          id={`default-${h._id}`}
+                          label= {`name : ${h.name}, id: ${h._id}`}
+                          onClick={(e) => {
+                            addAccess(h._id, e);
+                          }}
+                        />
+                      </span>
+                    </Form>
                   </li>
                 );
               })}
@@ -160,7 +164,7 @@ const UserDashboard = () => {
       <div className="row">
         <div className="col-3">{userLinks()}</div>
         <div className="col-9">
-        {showsuc && showAlert("Doctors added for access")}
+          {showsuc && showAlert("Doctors added for access")}
 
           {userInfo()}
           {purchaseHistory(history)}

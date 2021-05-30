@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth/index";
 import { Link } from "react-router-dom";
 import { getPatients } from "./apis";
+import { Table, Image } from 'react-bootstrap';
 
 const DoctorDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -54,38 +55,34 @@ const DoctorDashboard = () => {
         <ul className="list-group">
           <li className="list-group-item">{name}</li>
           <li className="list-group-item">{email}</li>
-          {/* <li className="list-group-item">{role === 1
-                            ? `Admin`
-                            : `Registered User`}</li> */}
         </ul>
       </div>
     );
   };
 
   const purchaseHistory = (history) => {
-    console.log(history, "iiiii")
     return (
-      <div className="card mb-5">
-        <h3 className="card-header">All Patients Access</h3>
-        <ul className="list-group">
-          <li className="list-group-item">
-            {history &&
-              history.length > 0 &&
-              history.map((h, i) => {
-                return (
-                  <Link to = {`/doctor/${h._id}`}>
-                    <li key={i} className="list-group-item">
-                      <span style={{ marginRight: "20px" }}>name:</span>
-                      <span style={{ marginRight: "20px" }}>{h.name}</span>
-                      <span style={{ marginRight: "20px" }}>id:</span>
-                      <span>{h._id}</span>
-                    </li>
-                  </Link>
-                );
-              })}
-          </li>
-        </ul>
-      </div>
+      <React.Fragment>
+        <h2>All Patients That Provided Access</h2>
+        <Table striped bordered hover responsive="sm">
+        <thead>
+                <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>id</th>
+                </tr>
+            </thead>
+            <tbody>
+                {history && history.length > 0 && history.map((r, i)=>(
+                    <tr key={i}>
+                        <td>{i}</td>
+                        <td>{r.name}</td>
+                        <td>{r._id}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+      </React.Fragment>
     );
   };
 

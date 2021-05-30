@@ -58,14 +58,16 @@ const DoctorDocuments = () => {
                 setValues({
                     ...values,
                     error: 'Sorry Patient Data is not found',
-                    showError: true
+                    showError: true,
+                    showTable: false
                 })
             }
             else if(data.success === false) {
                 // SHOW ERROR
                 setValues({
                     ...values,
-                    error: 'Patient Not Found',
+                    error: data.message,
+                    showTable: false,
                     showError: true,
                 })
             } else {

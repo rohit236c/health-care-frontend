@@ -3,9 +3,6 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth/index";
 import { Link } from "react-router-dom";
 import { getPatients } from "./apis";
-import moment from "moment";
-import InputGroup from "react-bootstrap/InputGroup";
-import  Chat  from "../chatBot/ChatBot";
 
 const DoctorDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -23,15 +20,6 @@ const DoctorDashboard = () => {
     }).catch((err)=>{
       console.log(err);
     })
-    // getDoctors().then((data)=>{
-    //     if(data.success === false) {
-    //         console.log("error");
-    //     } else {
-    //         setHistory(data.doctors);
-    //     }
-    // }).catch((err)=>{
-    //     console.log(err);
-    // })
   };
   useEffect(() => {
     loadPurchaseHistory();
@@ -42,7 +30,7 @@ const DoctorDashboard = () => {
         <h3 className="card-header">User Links</h3>
         <ul className="list-group">
           <li className="list-group-item">
-            <Link className="nav-link" to="/cart">
+            <Link className="nav-link" to="/doctor/doc">
               SEE documents
             </Link>
           </li>

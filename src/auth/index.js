@@ -33,6 +33,22 @@ export const signin = user => {
     });
 };
 
+export const getSecret = (data) => {
+    return fetch(`${API}/getsecret`, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        console.log(err);
+    });
+
+}
+
 export const authenticate = (data, next) => {
     // console.log(data,"auth");
     if (typeof window != undefined) {

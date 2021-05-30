@@ -59,6 +59,22 @@ const Menu = (props) => {
                     </React.Fragment>
                 )}
 
+                {isAuthenticated() && isAuthenticated().user.role === "patient" && (
+                    <React.Fragment>
+                        <li className="nav-item">
+                            <Link className="nav-link" style={isActive(history, '/dashboard')} to="/user/dashboard">Dashboard</Link>
+                        </li>
+                    </React.Fragment>
+                )}
+
+                { isAuthenticated() && isAuthenticated().user.role === "doctor" && (
+                    <React.Fragment>
+                        <li className="nav-item">
+                            <Link className="nav-link" style={isActive(history, '/dashboard')} to="/doctor/dashboard">Dashboard</Link>
+                        </li>
+                    </React.Fragment>
+                )}
+
                 {isAuthenticated() && (
                     <div>
                         <li className="nav-item">

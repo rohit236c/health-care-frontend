@@ -12,6 +12,7 @@ import axios from "axios";
 import { Alert } from "react-bootstrap";
 import ChatBot from "../chatBot/ChatBot";
 import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
+import { Table, Image } from 'react-bootstrap';
 
 const UserDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -26,7 +27,7 @@ const UserDashboard = () => {
     getDoctors()
       .then((data) => {
         if (data.success === false) {
-          console.log("error");
+          // Show error
         } else {
           setHistory(data.doctors);
         }
@@ -73,9 +74,6 @@ const UserDashboard = () => {
         <ul className="list-group">
           <li className="list-group-item">{name}</li>
           <li className="list-group-item">{email}</li>
-          {/* <li className="list-group-item">{role === 1
-                            ? `Admin`
-                            : `Registered User`}</li> */}
         </ul>
       </div>
     );
@@ -91,14 +89,12 @@ const UserDashboard = () => {
       )
       .then((res) => {
         // then print response status
-        console.log(res, "res");
         if (res.data.success === true) {
           setshowsuc(true);
         }
       });
   };
   const addAccess = (id, e) => {
-    console.log(e.target.checked);
     let dc = doc;
     if (e.target.checked) {
       let k = dc.indexOf(id); // -1
@@ -107,51 +103,41 @@ const UserDashboard = () => {
         setDoc(dc);
       }
     } else {
-      console.log("daoc");
       let p = [];
       for (let i = 0; i < doc.length; i++) {
         if (doc[i] !== id) {
-          console.log("test");
           p.push(doc[i]);
         }
       }
-      console.log("test", p);
       setDoc(p);
-      console.log("test", doc);
     }
-
-    console.log(doc, "doc");
   };
 
   const purchaseHistory = (history) => {
     return (
-      <div className="card mb-5">
-        <h3 className="card-header">All doctors</h3>
-        <ul className="list-group">
-          <li className="list-group-item">
-            {history &&
-              history.length > 0 &&
-              history.map((h, i) => {
-                return (
-                  <li key={i} className="list-group-item">
-                    <Form>
-                      <span>
-                        <Form.Check
-                          type="checkbox"
-                          id={`default-${h._id}`}
-                          label= {`name : ${h.name}, id: ${h._id}`}
-                          onClick={(e) => {
-                            addAccess(h._id, e);
-                          }}
-                        />
-                      </span>
-                    </Form>
-                  </li>
-                );
-              })}
-          </li>
-        </ul>
-      </div>
+      <Form>
+        <h2>All Available Doctors</h2>
+        <Table striped bordered hover>
+        <thead>
+                <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>id</th>
+                <th>Add Approval</th>
+                </tr>
+            </thead>
+            <tbody>
+                {history && history.length > 0 && history.map((r, i)=>(
+                    <tr key={i}>
+                        <td>{i}</td>
+                        <td>{r.name}</td>
+                        <td>{r._id}</td>
+                        <td><Form.Check onClick={(e)=>{addAccess(r._id, e)}} label="Add Doctor"></Form.Check></td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+      </Form>
     );
   };
 

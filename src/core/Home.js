@@ -10,8 +10,8 @@ const Home = () => {
   };
 
   const center = {
-    lat: 78.9629,
-    lng: 20.5937,
+    lat: 28.9629,
+    lng: 77.5937,
   };
 
   const { isLoaded } = useJsApiLoader({

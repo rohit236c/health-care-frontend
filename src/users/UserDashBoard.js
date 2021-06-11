@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth/index";
 import { Link, Redirect } from "react-router-dom";
-import { getDoctors } from "./apis";
+import { getDoctors, updateDoc } from "./apis";
 import moment from "moment";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormGroup from "react-bootstrap/FormGroup";
@@ -13,11 +13,15 @@ import { Alert } from "react-bootstrap";
 import ChatBot from "../chatBot/ChatBot";
 import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
 import { Table, Image } from 'react-bootstrap';
+import { AiOutlineStar } from 'react-icons/ai';
+import StarRatings from 'react-star-ratings';
+
 
 const UserDashboard = () => {
   const [history, setHistory] = useState([]);
   const [doc, setDoc] = useState([]);
   const [showsuc, setshowsuc] = useState(false);
+  const [rating, setRating] = useState(0);
   const {
     user: { _id, name, email, role },
     token,
@@ -113,6 +117,22 @@ const UserDashboard = () => {
     }
   };
 
+ const changeRating = (id, e) => {
+   setRating(e)
+  console.log(e, "change")
+   const object = {
+     id: id,
+     rating: e
+   }
+    updateDoc(object).then((res)=>{
+      if(res.success === true) {
+        setshowsuc(true)
+      }
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
   const purchaseHistory = (history) => {
     return (
       <Form>
@@ -123,6 +143,8 @@ const UserDashboard = () => {
                 <th>#</th>
                 <th>Name</th>
                 <th>id</th>
+                <th>Description</th>
+                <th>Review</th>
                 <th>Add Approval</th>
                 </tr>
             </thead>
@@ -132,6 +154,8 @@ const UserDashboard = () => {
                         <td>{i}</td>
                         <td>{r.name}</td>
                         <td>{r._id}</td>
+                        <td style={{width: '200px'}}>{r.description}</td>
+                        <td><StarRatings rating={r.rating} changeRating={(e)=>{changeRating(r._id, e)}} name='rating' starRatedColor="blue"starDimension="30px"></StarRatings></td>
                         <td><Form.Check onClick={(e)=>{addAccess(r._id, e)}} label="Add Doctor"></Form.Check></td>
                     </tr>
                 ))}
@@ -150,7 +174,7 @@ const UserDashboard = () => {
       <div className="row">
         <div className="col-3">{userLinks()}</div>
         <div className="col-9">
-          {showsuc && showAlert("Doctors added for access")}
+          {showsuc && showAlert("Doctors Updated")}
 
           {userInfo()}
           {purchaseHistory(history)}

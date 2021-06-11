@@ -10,6 +10,7 @@ const Signup = () => {
     email: "",
     password: "",
     error: "",
+    description: "",
     success: false,
     role: "",
   });
@@ -28,7 +29,7 @@ const Signup = () => {
   useEffect(() => {
     // loadRoles();
   }, []);
-  const { name, email, password, success, error, role } = values;
+  const { name, email, password, success, error, role, description } = values;
 
   const signUpForm = () => (
     <form>
@@ -71,6 +72,15 @@ const Signup = () => {
             ))}
         </select>
       </div>
+      <div className="form-group">
+        <label className="text-muted">Description</label>
+        <input
+          onChange={handleChange("description")}
+          className="form-control"
+          value={description}
+          type="text"
+        />
+      </div>
       <button onClick={clickSubmit} className="btn btn-primary">
         Submit
       </button>
@@ -83,7 +93,7 @@ const Signup = () => {
       ...values,
       error: false,
     });
-    signup({ name, email, password, role }).then((data) => {
+    signup({ name, email, password, role, description }).then((data) => {
       if (data.success === false) {
         setValues({
           ...values,
